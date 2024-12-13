@@ -164,5 +164,49 @@ public class ManagePlayers {
         JOptionPane.showMessageDialog(null, "Jugador con ID " + id + " no encontrado.");
     }
 
+    public void editar_Jugador(Jugador[] jugadores, int idJugador) {
+        // Buscar al jugador con el ID proporcionado
+        Jugador jugadorSeleccionado = null;
+        for (Jugador jugador : jugadores) {
+            if (jugador != null && jugador.getId() == idJugador) {
+                jugadorSeleccionado = jugador;
+                break;
+            }
+        }
+
+        // Verificar si el jugador existe
+        if (jugadorSeleccionado == null) {
+            JOptionPane.showMessageDialog(null, "Jugador no encontrado.");
+            return;
+        }
+
+        // Solicitar la edición del nombre
+        String nombre_edit = JOptionPane.showInputDialog("Ingrese el nuevo nombre del jugador:");
+        if (nombre_edit != null && !nombre_edit.trim().isEmpty()) {
+            jugadorSeleccionado.setNombre(nombre_edit);
+        } else {
+            JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío.");
+            return;  // Si el nombre es inválido, no se hace nada y se sale del método
+        }
+
+        // Solicitar la edición de la posición
+        Posicion posicion_edit = Botones_Jugadores.seleccioneLaPosicion();
+        if (posicion_edit != null) {
+            jugadorSeleccionado.setPosicion(posicion_edit);
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una posición válida.");
+            return;  // Si no se selecciona una posición, no se hace nada y se sale del método
+        }
+
+        // Mostrar mensaje de confirmación de la edición
+        StringBuilder mensajeConfirmacion = new StringBuilder("Jugador editado:\n");
+        mensajeConfirmacion.append("ID: ").append(jugadorSeleccionado.getId()).append("\n");
+        mensajeConfirmacion.append("Nombre: ").append(jugadorSeleccionado.getNombre()).append("\n");
+        mensajeConfirmacion.append("Posición: ").append(jugadorSeleccionado.getPosicion()).append("\n");
+        mensajeConfirmacion.append("Estado: ").append(jugadorSeleccionado.getEstado()).append("\n");
+
+        JOptionPane.showMessageDialog(null, mensajeConfirmacion.toString());
+    }
+
 
 }

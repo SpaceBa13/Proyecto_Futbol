@@ -77,20 +77,19 @@ public class Proyectofutbol {
                                 Posicion posicion = Botones_Jugadores.seleccioneLaPosicion();
 
 
-                                Jugador jugador_modelo = new Jugador(nombre, equi, 0, 0, posicion);
+                                Jugador jugador_modelo = new Jugador(nombre, equi, posicion);
 
                                 managePlayers.agregar_jugadores(jugador_modelo, jugadores);
                                 managePlayers.agregar_jugador_a_equipos_disponibles(jugador_modelo, equipos);
 
                                 menujugadores = 5;
                                 break;
-                            case 1:
-                                //Todavia no esta completo
-                                //Jugadores.EditarJugadores();
+                            case 1://Edicion de jugadores
+                                int id_jugador_edit = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del jugador que desea eliminar"));
+                                managePlayers.editar_Jugador(jugadores,id_jugador_edit);
                                 menujugadores = 5;
                                 break;
-                            case 2:
-                                //Todavia no es completo
+                            case 2://Eliminacion de jugadores
                                 int id_jugador = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del jugador que desea eliminar"));
                                 managePlayers.eliminar_jugador(jugadores, id_jugador);
                                 menujugadores = 5;

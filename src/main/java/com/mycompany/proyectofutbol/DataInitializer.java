@@ -23,8 +23,6 @@ public class DataInitializer {
             Jugador portero = new Jugador(
                     "Portero " + (jugadoresGenerados + 1),
                     equipo.getNombreEquipo(),
-                    0,
-                    0,
                     Posicion.PORTERO
             );
             portero.setEstado(Estado.TITULAR); // El portero es siempre titular
@@ -48,8 +46,6 @@ public class DataInitializer {
                 Jugador jugador = new Jugador(
                         nombreJugador,
                         equipo.getNombreEquipo(),
-                        0,
-                        0,
                         posicion
                 );
                 jugador.setEstado(estado); // Asignar estado a titular o suplente
@@ -67,8 +63,6 @@ public class DataInitializer {
             Jugador jugador = new Jugador(
                     nombreJugador,
                     "", // Sin equipo
-                    0,
-                    0,
                     posicion
             );
 
