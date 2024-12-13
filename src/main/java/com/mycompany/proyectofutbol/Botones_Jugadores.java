@@ -48,11 +48,11 @@ public class Botones_Jugadores {
 
         switch (valorBoton1) {
             case 0: 
-                return Estado.titular;
+                return Estado.TITULAR;
             case 1:
-                return Estado.suplente;
+                return Estado.SUPLENTE;
             default: 
-                return Estado.libre;
+                return Estado.LIBRE;
         }
     
 }

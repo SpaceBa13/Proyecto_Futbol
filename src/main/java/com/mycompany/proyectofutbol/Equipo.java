@@ -1,38 +1,60 @@
 package com.mycompany.proyectofutbol;
 
+
+import javax.swing.*;
+
 public class Equipo {
-    
-    //Atributos
-    
-    public int id;
-    public String nombreEquipo;
-    public int pJugados = 0;
-    public int pGanados = 0;
-    public int pEmpatados = 0;
-    public int pPerdidos = 0;
-    public int golesF = 0;
-    public int golesC = 0;
-    public int posesion = 0;
-    public static int contador = 1;
-    //Constructores
-        
-    //Metodos
-    public void mostrarEquipos(int nEquipo) { 
-        
-        
-        System.out.println("============================================================");
-        System.out.println("Equipo "+ nEquipo + ": " + nombreEquipo);
-        System.out.println("============================================================");
-        System.out.println("Estadisticas e informacion tecnica:\n");  
-        System.out.println("ID del Equipo " + nEquipo + ": " + id);
-        System.out.println("Partidos jugados: " + pJugados);
-        System.out.println("Partidos ganados: " + pGanados);
-        System.out.println("Partidos empatados: " + pEmpatados);
-        System.out.println("Partidos perdidos: " + pPerdidos);
-        System.out.println("Goles a favor: " + golesF);
-        System.out.println("Goles en contra: " + golesC);
-        System.out.println("Porcentaje de posesion: " + posesion);  
-        System.out.println("============================================================\n");
-    }    
-    
+    private int id;
+    private String nombreEquipo;
+    private Jugador[] jugadores; // Arreglo fijo de 7 jugadores
+    private int contadorJugadores; // Lleva el control de cuántos jugadores hay en el equipo
+    private static int idCounter = 100; // ID inicial auto-incrementable para equipos
+
+    // Constructor
+    public Equipo(String nombreEquipo) {
+        this.id = idCounter++;
+        this.nombreEquipo = nombreEquipo;
+        this.jugadores = new Jugador[7]; // Arreglo estático
+        this.contadorJugadores = 0;
+    }
+
+    // Método para agregar jugador
+    public boolean agregarJugador(Jugador jugador) {
+        if (contadorJugadores < 7) {
+            jugadores[contadorJugadores] = jugador;
+            contadorJugadores++;
+
+            // Asignar estado según la posición en el arreglo
+            if (contadorJugadores <= 5) {
+                jugador.setEstado(Estado.TITULAR);
+            } else {
+                jugador.setEstado(Estado.SUPLENTE);
+            }
+
+            // Actualizar equipo del jugador
+            jugador.setEquipo(nombreEquipo);
+            return true;
+        }
+        return false; // Equipo completo
+    }
+
+    public int getContadorJugadores() {
+        return contadorJugadores;
+    }
+
+    public void mostrarInformacion() {
+        StringBuilder info = new StringBuilder("Equipo: " + nombreEquipo + " (ID: " + id + ")\n");
+        info.append("Jugadores:\n");
+
+        for (int i = 0; i < contadorJugadores; i++) {
+            Jugador jugador = jugadores[i];
+            if (jugador != null) {
+                info.append("- ").append(jugador.getNombre())
+                        .append(" (").append(jugador.getPosicion()).append(", ")
+                        .append(jugador.getEstado()).append(")\n");
+            }
+        }
+
+        JOptionPane.showMessageDialog(null, info.toString());
+    }
 }

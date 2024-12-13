@@ -15,7 +15,7 @@ public class Partido {
     }
 
     //Equipo 1 jugador
-
+    /*
     void Simular(){
         for(int i = 0; i <= 40; i++){
             probabilidad = rand.nextInt(1,100);
@@ -40,7 +40,7 @@ public class Partido {
                     //atrapada espectacular.
                     //ESTA NO ES TRANSISITIVA!!!!!!!!!!!!!!!!!!!!!
                     case 3:
-                        /*
+
                         moneda = rand.nextInt(0, 1);
                         for(int i = 0; i < equipos[moneda].jugadores.lengt ; i++){
                             if (equipos[moneda].jugadores[i].posicion.equals("NO Portero")){
@@ -51,14 +51,11 @@ public class Partido {
                                 System.out.println(equipos[moneda].id + "Hizo un gol");
                             }
                         }
-                    */
+
                 }
 
             }
 
         }
-
-    }
-
-
+    */
 }

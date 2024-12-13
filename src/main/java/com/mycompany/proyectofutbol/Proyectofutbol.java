@@ -6,12 +6,13 @@ public class Proyectofutbol {
 
     public static void main(String[] args) {
         ManagePlayers managePlayers = new ManagePlayers();
+        ManageTeams manageTeams = new ManageTeams();
 
         String[] botones = {" Gestión de Jugadores", " Gestión de Equipos", " Simulación de Partidos", " Reportes", " Salir del Sistema"};
         int valorbotones;
         Jugador jugadores[] = new Jugador[70];
-
         Equipo equipos[] = new Equipo[20];
+
 
         valorbotones = JOptionPane.showOptionDialog(
                 null,
@@ -23,9 +24,9 @@ public class Proyectofutbol {
                 botones,
                 botones[0]);
         
-        Equipo Equipo1 = new Equipo();
-        Equipo Equipo2 = new Equipo();
-        Equipo Equipo3 = new Equipo();
+        Equipo Equipo1 = new Equipo("1");
+        Equipo Equipo2 = new Equipo("2");
+        Equipo Equipo3 = new Equipo("3");
 
         while (valorbotones != 5) {
             switch (valorbotones) {
@@ -49,18 +50,12 @@ public class Proyectofutbol {
                     while (menujugadores != 5) {
                         switch (menujugadores) {
                             case 0:
-                                int identificacion = Integer.parseInt(JOptionPane.showInputDialog(
-                                        "Ingrese la identificación  del jugador "));
                                 String nombre = JOptionPane.showInputDialog(
                                         "Ingrese el nombre del jugador: ");
 
                                 //PRUEBA
                                 String equi = JOptionPane.showInputDialog(
                                         "Ingrese el equipo del jugador: ");
-                                int acc = Integer.parseInt(JOptionPane.showInputDialog(
-                                        "Ingrese las acciones  del jugador: "));
-                                int goles = Integer.parseInt(JOptionPane.showInputDialog(
-                                        "Ingrese los goles del jugador: "));
 
                                 //Se agregan los botones para seleccionar la Posicion
                                 Posicion posicion = Botones_Jugadores.seleccioneLaPosicion();
@@ -68,7 +63,7 @@ public class Proyectofutbol {
                                 Estado estado = Botones_Jugadores.seleccioneElEstado();
 
 
-                                Jugador jugador_modelo = new Jugador(identificacion, nombre, equi, acc, goles, posicion, estado);
+                                Jugador jugador_modelo = new Jugador(nombre, equi, 0, 0, posicion, estado);
                                 managePlayers.agregar_jugadores(jugador_modelo, jugadores);
 
                                 menujugadores = 5;
@@ -80,7 +75,8 @@ public class Proyectofutbol {
                                 break;
                             case 2:
                                 //Todavia no es completo
-                                //Jugadores.EliminarJugador();
+                                int id_jugador = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del jugador que desea eliminar"));
+                                managePlayers.eliminar_jugador(jugadores, id_jugador);
                                 menujugadores = 5;
                                 break;
                             case 3:
@@ -116,42 +112,12 @@ public class Proyectofutbol {
                     while (valorEquipos != 5) {
                         //Casos 
                         switch (valorEquipos) {
-                            case 0: //Metodo de mostrar  
-                                int cEquipo1Mostar = 1;
-                                int cEquipo2Mostar = 2;
-                                int cEquipo3Mostar = 3;
-                                Equipo1.mostrarEquipos(cEquipo1Mostar);
-                                Equipo2.mostrarEquipos(cEquipo2Mostar);
-                                Equipo3.mostrarEquipos(cEquipo3Mostar);
-                                valorEquipos = 5;
+                            case 0: //Metodo de mostrar
+
                                 break;
                             case 1: //Metodo de agregar
-                                if (Equipo.contador == 4) {
-                                    JOptionPane.showMessageDialog(null, "Solo se pueden crear hasta 3 equipos");
-                                    valorEquipos = 5;
-                                    break;
-                                }
-
-                                if (Equipo.contador == 1) {
-                                    Equipo1.id = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del equipo #" + Equipo.contador + " : "));
-                                    Equipo1.nombreEquipo = JOptionPane.showInputDialog("Ingrese el nombre del equipo #" + Equipo.contador + " : ");
-                                    Equipo.contador++;
-                                    valorEquipos = 5;
-                                    break;
-
-                                } else if (Equipo.contador == 2) {
-                                    Equipo2.id = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del equipo #" + Equipo.contador + " : "));
-                                    Equipo2.nombreEquipo = JOptionPane.showInputDialog("Ingrese el nombre del equipo #" + Equipo.contador + " : ");
-                                    Equipo.contador++;
-                                    valorEquipos = 5;
-                                    break;
-                                } else if (Equipo.contador == 3) {
-                                    Equipo3.id = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del equipo #" + Equipo.contador + " : "));
-                                    Equipo3.nombreEquipo = JOptionPane.showInputDialog("Ingrese el nombre del equipo #" + Equipo.contador + " : ");
-                                    Equipo.contador++;
-                                    valorEquipos = 5;
-                                    break;
-                                }
+                                manageTeams.agregarEquipo(equipos, jugadores);
+                                valorEquipos = 5;
                                 break;
                             case 2:
                                 JOptionPane.showMessageDialog(null, "Agregar Jugador a un Equipo");

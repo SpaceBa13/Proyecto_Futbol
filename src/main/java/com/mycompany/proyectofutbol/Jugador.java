@@ -12,28 +12,21 @@ public class Jugador {
     private int acciones;
     private Posicion posicion;
     private Estado estado;
-    public static int cantidadJugadores = 0;
-    private String jugador;
+    private static int idCounter = 10; // ID inicial que se incrementará automáticamente
     //Contructores
 
-    public Jugador(int id, String nombre, String equipo, int golesAnotados, int acciones, Posicion posicion, Estado estado) {
-        this.id = id;
+    public Jugador(String nombre, String equipo, int golesAnotados, int acciones, Posicion posicion, Estado estado) {
+        this.id = idCounter++; // Asigna el ID único y lo incrementa
         this.nombre = nombre;
         this.equipo = equipo;
         this.golesAnotados = golesAnotados;
         this.acciones = acciones;
         this.posicion = posicion;
         this.estado = estado;
-        //this.cantidadJugadores ++;
     }
 
     public Jugador(){
     }
-
-    
-//    private static Jugadores jugador1;
-//    private static Jugadores jugador2;
-//    private static Jugadores jugador3;
 
     //Metodos
     public void mostrarDatos() {
@@ -47,12 +40,7 @@ public class Jugador {
                 + "||"+ "Goles " + golesAnotados);
     }
 
-    
 
-    
-
-    
-     
     //Encapsuladores
     public int getId() {
         return id;
