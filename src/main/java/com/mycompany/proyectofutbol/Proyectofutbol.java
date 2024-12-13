@@ -16,15 +16,15 @@ public class Proyectofutbol {
         // Mostrar los equipos generados con sus jugadores
         for (Equipo equipo : equipos) {
             if (equipo != null) {
-                equipo.mostrarInformacion();
+                equipo.mostrar_informacion();
             }
         }
 
         // Mostrar los jugadores sin equipo
         System.out.println("\nJugadores sin equipo:");
         for (Jugador jugador : jugadores) {
-            if (jugador != null && (jugador.getEquipo() == null || jugador.getEquipo().isEmpty())) {
-                System.out.println("ID: " + jugador.getId() + ", Nombre: " + jugador.getNombre() + ", Posición: " + jugador.getPosicion());
+            if (jugador != null && (jugador.get_equipo() == null || jugador.get_equipo().isEmpty())) {
+                System.out.println("ID: " + jugador.get_id() + ", Nombre: " + jugador.get_nombre() + ", Posición: " + jugador.get_posicion());
             }
         }
 
@@ -86,7 +86,7 @@ public class Proyectofutbol {
                                 break;
                             case 1://Edicion de jugadores
                                 int id_jugador_edit = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del jugador que desea eliminar"));
-                                managePlayers.editar_Jugador(jugadores,id_jugador_edit);
+                                managePlayers.editar_jugador(jugadores,id_jugador_edit);
                                 menujugadores = 5;
                                 break;
                             case 2://Eliminacion de jugadores
@@ -94,7 +94,7 @@ public class Proyectofutbol {
                                 managePlayers.eliminar_jugador(jugadores, id_jugador);
                                 menujugadores = 5;
                                 break;
-                            case 3:
+                            case 3://Mostrar Jugadores
                                 managePlayers.imprimir_jugadores(jugadores);
                                 menujugadores = 5;
                                 break;
@@ -132,14 +132,20 @@ public class Proyectofutbol {
                                 valorEquipos = 5;
                                 break;
                             case 1: //Metodo de agregar
-                                manageTeams.agregarEquipo(equipos, jugadores);
+                                manageTeams.agregar_equipo(equipos, jugadores);
                                 valorEquipos = 5;
                                 break;
                             case 2: //Metodo de agregar un jugador a un equipo
                                 JOptionPane.showMessageDialog(null, "Agregar Jugador a un Equipo");
+                                int id_equipo_agregar = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del equipo al que desea agregar un jugador"));
+                                manageTeams.agregar_jugador_a_equipo_por_id(jugadores, equipos, id_equipo_agregar);
+                                valorEquipos = 5;
                                 break;
-                            case 3:
+                            case 3://Metodo de eliminar un jugador a un equipo
                                 JOptionPane.showMessageDialog(null, "Eliminar Jugador a un Equipo");
+                                int id_equipo_eliminar = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del equipo al que desea eliminar un jugador"));
+                                manageTeams.eliminar_jugador_a_equipo_por_id(jugadores, equipos, id_equipo_eliminar);
+                                valorEquipos = 5;
                                 break;
                             default:
                                 valorEquipos = 5;

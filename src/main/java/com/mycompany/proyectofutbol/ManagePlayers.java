@@ -2,20 +2,46 @@ package com.mycompany.proyectofutbol;
 
 import javax.swing.*;
 
+import javax.swing.JOptionPane;
+
 public class ManagePlayers {
 
-    ManagePlayers(){}
+    public ManagePlayers() {}
 
-    void agregar_jugadores(Jugador jugador, Jugador[] jugadores){
-        for(int i = 0; i < jugadores.length; i++) {
-            if(jugadores[i] == null){
+    // ----- Funciones de Impresión -----
+
+    // Imprimir información de los jugadores
+    void imprimir_jugadores(Jugador[] jugadores) {
+        for (int i = 0; i < jugadores.length; i++) {
+            if (jugadores[i] != null) {
+                StringBuilder info = new StringBuilder("============================================================\n");
+                info.append("ID: ").append(jugadores[i].get_id()).append(" || ");
+                info.append("Nombre: ").append(jugadores[i].get_nombre()).append(" || ");
+                info.append("Posición: ").append(jugadores[i].get_posicion()).append(" || ");
+                info.append("Equipo: ").append(jugadores[i].get_equipo()).append(" || ");
+                info.append("Estado: ").append(jugadores[i].get_estado()).append(" || ");
+                info.append("Goles: ").append(jugadores[i].get_goles_anotados()).append("\n");
+                info.append("============================================================\n");
+
+                // Imprimir la información en la consola
+                System.out.print(info.toString());
+            }
+        }
+    }
+
+    // ----- Funciones de Agregar Jugadores -----
+
+    // Agregar jugador a la lista de jugadores
+    void agregar_jugadores(Jugador jugador, Jugador[] jugadores) {
+        for (int i = 0; i < jugadores.length; i++) {
+            if (jugadores[i] == null) {
                 jugadores[i] = new Jugador();
-                jugadores[i].setAcciones(jugador.getAcciones());
-                jugadores[i].setEquipo(jugador.getEquipo());
-                jugadores[i].setPosicion(jugador.getPosicion());
-                jugadores[i].setNombre(jugador.getNombre());
-                jugadores[i].setId(jugador.getId());
-                jugadores[i].setGolesAnotados(jugador.getGolesAnotados());
+                jugadores[i].set_acciones(jugador.get_acciones());
+                jugadores[i].set_equipo(jugador.get_equipo());
+                jugadores[i].set_posicion(jugador.get_posicion());
+                jugadores[i].set_nombre(jugador.get_nombre());
+                jugadores[i].set_id(jugador.get_id());
+                jugadores[i].set_goles_anotados(jugador.get_goles_anotados());
                 JOptionPane.showMessageDialog(null, "SE AGREGO UN JUGADOR");
                 return;
             }
@@ -23,59 +49,53 @@ public class ManagePlayers {
         JOptionPane.showMessageDialog(null, "NO SE AGREGO NINGUN JUGADOR");
     }
 
+    // Agregar un jugador a un equipo
     public void agregar_jugador_a_equipo(Jugador jugador, Equipo equipo) {
-        // Verificar si el jugador es un portero y si ya existe un portero en el equipo
         boolean porteroAsignado = false;
-        for (Jugador j : equipo.getJugadores()) {
-            if (j != null && j.getPosicion() == Posicion.PORTERO) {
+        for (Jugador j : equipo.get_jugadores()) {
+            if (j != null && j.get_posicion() == Posicion.PORTERO) {
                 porteroAsignado = true;
                 break;
             }
         }
 
-        // Si el jugador es un portero y ya existe un portero en el equipo, mostrar un mensaje
-        if (jugador.getPosicion() == Posicion.PORTERO && porteroAsignado) {
+        if (jugador.get_posicion() == Posicion.PORTERO && porteroAsignado) {
             JOptionPane.showMessageDialog(null, "No se puede agregar otro portero al equipo.");
             return;
         }
 
-        // Asignar el estado del jugador según las posiciones disponibles en el equipo
-        int posicionesDisponibles = 7 - equipo.getContadorJugadores(); // Calcular posiciones disponibles
+        // Asignar estado según las posiciones disponibles
+        int posicionesDisponibles = 7 - equipo.get_contador_jugadores();
         if (posicionesDisponibles == 2) {
-            jugador.setEstado(Estado.SUPLENTE); // Asignar como suplente si hay dos posiciones disponibles
+            jugador.set_estado(Estado.SUPLENTE);
         } else {
-            jugador.setEstado(Estado.TITULAR); // Asignar como titular en cualquier otro caso
+            jugador.set_estado(Estado.TITULAR);
         }
 
-        // Intentar agregar el jugador al equipo
-        if (equipo.agregarJugador(jugador)) {
-            JOptionPane.showMessageDialog(null, "Jugador agregado exitosamente al equipo: " + equipo.getNombreEquipo() + ". Estado: " + jugador.getEstado());
+        if (equipo.agregar_jugador(jugador)) {
+            JOptionPane.showMessageDialog(null, "Jugador agregado exitosamente al equipo: " + equipo.get_nombre_equipo() + ". Estado: " + jugador.get_estado());
         } else {
-            JOptionPane.showMessageDialog(null, "El equipo " + equipo.getNombreEquipo() + " ya está completo.");
+            JOptionPane.showMessageDialog(null, "El equipo " + equipo.get_nombre_equipo() + " ya está completo.");
         }
     }
 
+    // Agregar un jugador a equipos disponibles
     public void agregar_jugador_a_equipos_disponibles(Jugador jugador, Equipo[] equipos) {
-        // Crear una lista de opciones para mostrar en el menú
         String[] opcionesEquipos = new String[equipos.length + 1];
         int index = 0;
 
-        // Agregar equipos disponibles (aquellos con menos de 7 jugadores)
         for (int i = 0; i < equipos.length; i++) {
-            if (equipos[i] != null && equipos[i].getContadorJugadores() < 7) {
-                opcionesEquipos[index++] = equipos[i].getNombreEquipo() + " (ID: " + equipos[i].getId() + ")";
+            if (equipos[i] != null && equipos[i].get_contador_jugadores() < 7) {
+                opcionesEquipos[index++] = equipos[i].get_nombre_equipo() + " (ID: " + equipos[i].get_id() + ")";
             }
         }
 
-        // Si no hay equipos disponibles, mostrar solo "Ningún equipo"
         if (index == 0) {
             opcionesEquipos[0] = "Ningún equipo";
         } else {
-            // Agregar la opción "Ningún equipo" al final de la lista
             opcionesEquipos[index] = "Ningún equipo";
         }
 
-        // Mostrar el menú de selección de equipo
         String seleccion = (String) JOptionPane.showInputDialog(
                 null,
                 "Seleccione el equipo al que desea agregar al jugador o 'Ningún equipo':",
@@ -86,71 +106,47 @@ public class ManagePlayers {
                 opcionesEquipos[0]
         );
 
-        // Si el usuario selecciona "Ningún equipo", no se agrega al jugador a ningún equipo
         if (seleccion == null || seleccion.equals("Ningún equipo")) {
-            jugador.setEquipo(""); // Dejar al jugador sin equipo
-            jugador.setEstado(Estado.LIBRE); // Asignar el estado "Libre"
+            jugador.set_equipo("");
+            jugador.set_estado(Estado.LIBRE);
             JOptionPane.showMessageDialog(null, "El jugador no se unió a ningún equipo. Su estado es Libre.");
             return;
         }
 
-        // Si el jugador selecciona un equipo, agregarlo a ese equipo
         for (int i = 0; i < equipos.length; i++) {
-            if (equipos[i] != null && seleccion.contains(equipos[i].getNombreEquipo())) {
-               agregar_jugador_a_equipo(jugador, equipos[i]);
-               return;
+            if (equipos[i] != null && seleccion.contains(equipos[i].get_nombre_equipo())) {
+                agregar_jugador_a_equipo(jugador, equipos[i]);
+                return;
             }
         }
     }
 
-    void imprimir_jugadores(Jugador[] jugadores){
-        for(int i = 0; i < jugadores.length; i++){
-            if (jugadores[i] != null) {
-                System.out.print("============================================================");
-                System.out.print("ID: " + jugadores[i].getId());
-                System.out.print("||");
-                System.out.print("Nombre: " + jugadores[i].getNombre());
-                System.out.print("||");
-                System.out.print("Posicion: " + jugadores[i].getPosicion());
-                System.out.print("||");
-                System.out.print("Eqipo: " + jugadores[i].getEquipo());
-                System.out.print("||");
-                System.out.print("ESTADO: " + jugadores[i].getEstado());
-                System.out.print("||");
-                System.out.print("Goles: " + jugadores[i].getGolesAnotados());
-                System.out.println("============================================================\n");
-            }
-        }
+    // ----- Funciones de Eliminar Jugadores -----
 
-    }
-
+    // Eliminar jugador de la lista
     void eliminar_jugador(Jugador[] jugadores, int id) {
         for (int i = 0; i < jugadores.length; i++) {
-            if (jugadores[i] != null && jugadores[i].getId() == id) {
-                // Verifica si el jugador está asignado a un equipo
-                if (jugadores[i].getEquipo() != null && !jugadores[i].getEquipo().isEmpty()) {
+            if (jugadores[i] != null && jugadores[i].get_id() == id) {
+                if (jugadores[i].get_equipo() != null && !jugadores[i].get_equipo().isEmpty()) {
                     JOptionPane.showMessageDialog(null,
-                            "No se puede eliminar al jugador con ID " + id + " porque pertenece al equipo: " + jugadores[i].getEquipo());
+                            "No se puede eliminar al jugador con ID " + id + " porque pertenece al equipo: " + jugadores[i].get_equipo());
                     return;
                 }
 
-                // Mostrar información del jugador y solicitar confirmación para eliminarlo
                 int confirmacion = JOptionPane.showConfirmDialog(
                         null,
                         "¿Está seguro que desea eliminar al jugador con ID " + id + "?\n" +
-                                "Nombre: " + jugadores[i].getNombre() + "\n" +
-                                "Posición: " + jugadores[i].getPosicion(),
+                                "Nombre: " + jugadores[i].get_nombre() + "\n" +
+                                "Posición: " + jugadores[i].get_posicion(),
                         "Confirmar eliminación",
                         JOptionPane.YES_NO_OPTION
                 );
 
                 if (confirmacion == JOptionPane.YES_OPTION) {
-                    // Eliminar el jugador desplazando los elementos
                     for (int j = i; j < jugadores.length - 1; j++) {
                         jugadores[j] = jugadores[j + 1];
                     }
-                    jugadores[jugadores.length - 1] = null; // Limpia la última posición
-
+                    jugadores[jugadores.length - 1] = null;
                     JOptionPane.showMessageDialog(null, "Jugador con ID " + id + " eliminado exitosamente.");
                     return;
                 } else {
@@ -160,27 +156,26 @@ public class ManagePlayers {
             }
         }
 
-        // Si el jugador no fue encontrado
         JOptionPane.showMessageDialog(null, "Jugador con ID " + id + " no encontrado.");
     }
 
-    public void editar_Jugador(Jugador[] jugadores, int idJugador) {
-        // Buscar al jugador con el ID proporcionado
+    // ----- Funciones de Edición de Jugador -----
+
+    // Editar datos de un jugador
+    public void editar_jugador(Jugador[] jugadores, int idJugador) {
         Jugador jugadorSeleccionado = null;
         for (Jugador jugador : jugadores) {
-            if (jugador != null && jugador.getId() == idJugador) {
+            if (jugador != null && jugador.get_id() == idJugador) {
                 jugadorSeleccionado = jugador;
                 break;
             }
         }
 
-        // Verificar si el jugador existe
         if (jugadorSeleccionado == null) {
             JOptionPane.showMessageDialog(null, "Jugador no encontrado.");
             return;
         }
 
-        // Presentar opciones para editar el jugador
         String[] opciones = {"Editar Nombre", "Editar Posición"};
         int opcionSeleccionada = JOptionPane.showOptionDialog(
                 null,
@@ -193,45 +188,34 @@ public class ManagePlayers {
                 opciones[0]
         );
 
-        if (opcionSeleccionada == -1) {
-            return; // Si el usuario cancela la selección, salir
-        }
+        if (opcionSeleccionada == -1) return; // Si el usuario cancela la selección, salir
 
-        // Editar Nombre
         if (opcionSeleccionada == 0) {
             String nombre_edit = JOptionPane.showInputDialog("Ingrese el nuevo nombre del jugador:");
             if (nombre_edit != null && !nombre_edit.trim().isEmpty()) {
-                jugadorSeleccionado.setNombre(nombre_edit);
-                JOptionPane.showMessageDialog(null, "Nombre actualizado a: " + jugadorSeleccionado.getNombre());
+                jugadorSeleccionado.set_nombre(nombre_edit);
+                JOptionPane.showMessageDialog(null, "Nombre actualizado a: " + jugadorSeleccionado.get_nombre());
             } else {
                 JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío.");
-                return;  // Si el nombre es inválido, no se hace nada y se sale del método
+                return;
             }
-        }
-
-        // Editar Posición
-        else if (opcionSeleccionada == 1) {
-            // Usamos el método Botones_Jugadores.seleccioneLaPosicion para seleccionar la posición
+        } else if (opcionSeleccionada == 1) {
             Posicion posicion_edit = Botones_Jugadores.seleccioneLaPosicion();
-
             if (posicion_edit != null) {
-                jugadorSeleccionado.setPosicion(posicion_edit);
-                JOptionPane.showMessageDialog(null, "Posición actualizada a: " + jugadorSeleccionado.getPosicion());
+                jugadorSeleccionado.set_posicion(posicion_edit);
+                JOptionPane.showMessageDialog(null, "Posición actualizada a: " + jugadorSeleccionado.get_posicion());
             } else {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar una posición válida.");
-                return;  // Si no se selecciona una posición, no se hace nada y se sale del método
+                return;
             }
         }
 
-        // Mostrar mensaje de confirmación de la edición
         StringBuilder mensajeConfirmacion = new StringBuilder("Jugador editado:\n");
-        mensajeConfirmacion.append("ID: ").append(jugadorSeleccionado.getId()).append("\n");
-        mensajeConfirmacion.append("Nombre: ").append(jugadorSeleccionado.getNombre()).append("\n");
-        mensajeConfirmacion.append("Posición: ").append(jugadorSeleccionado.getPosicion()).append("\n");
-        mensajeConfirmacion.append("Estado: ").append(jugadorSeleccionado.getEstado()).append("\n");
+        mensajeConfirmacion.append("ID: ").append(jugadorSeleccionado.get_id()).append("\n");
+        mensajeConfirmacion.append("Nombre: ").append(jugadorSeleccionado.get_nombre()).append("\n");
+        mensajeConfirmacion.append("Posición: ").append(jugadorSeleccionado.get_posicion()).append("\n");
+        mensajeConfirmacion.append("Estado: ").append(jugadorSeleccionado.get_estado()).append("\n");
 
         JOptionPane.showMessageDialog(null, mensajeConfirmacion.toString());
     }
-
-
 }

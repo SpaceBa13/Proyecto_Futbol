@@ -22,11 +22,11 @@ public class DataInitializer {
             // Asignar primero el portero titular
             Jugador portero = new Jugador(
                     "Portero " + (jugadoresGenerados + 1),
-                    equipo.getNombreEquipo(),
+                    equipo.get_nombre_equipo(),
                     Posicion.PORTERO
             );
-            portero.setEstado(Estado.TITULAR); // El portero es siempre titular
-            equipo.agregarJugador(portero);
+            portero.set_estado(Estado.TITULAR); // El portero es siempre titular
+            equipo.agregar_jugador(portero);
             jugadores[jugadoresGenerados++] = portero;
             porteroAsignado = true;
 
@@ -45,11 +45,11 @@ public class DataInitializer {
                 // Crear el jugador y asignarle estado según su posición
                 Jugador jugador = new Jugador(
                         nombreJugador,
-                        equipo.getNombreEquipo(),
+                        equipo.get_nombre_equipo(),
                         posicion
                 );
-                jugador.setEstado(estado); // Asignar estado a titular o suplente
-                equipo.agregarJugador(jugador);
+                jugador.set_estado(estado); // Asignar estado a titular o suplente
+                equipo.agregar_jugador(jugador);
                 jugadores[jugadoresGenerados++] = jugador;
             }
         }
@@ -66,7 +66,7 @@ public class DataInitializer {
                     posicion
             );
 
-            jugador.setEstado(Estado.LIBRE); // Estado Libre para jugadores sin equipo
+            jugador.set_estado(Estado.LIBRE); // Estado Libre para jugadores sin equipo
             jugadores[i] = jugador;
         }
     }
