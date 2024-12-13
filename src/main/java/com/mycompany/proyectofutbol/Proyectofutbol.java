@@ -3,15 +3,31 @@ package com.mycompany.proyectofutbol;
 import javax.swing.JOptionPane;
 
 public class Proyectofutbol {
-
     public static void main(String[] args) {
         ManagePlayers managePlayers = new ManagePlayers();
         ManageTeams manageTeams = new ManageTeams();
-
         String[] botones = {" Gestión de Jugadores", " Gestión de Equipos", " Simulación de Partidos", " Reportes", " Salir del Sistema"};
         int valorbotones;
         Jugador jugadores[] = new Jugador[70];
         Equipo equipos[] = new Equipo[20];
+
+        // Llamar a la clase de inicialización para generar los datos
+        DataInitializer.inicializarDatos(equipos, jugadores);
+        // Mostrar los equipos generados con sus jugadores
+        for (Equipo equipo : equipos) {
+            if (equipo != null) {
+                equipo.mostrarInformacion();
+            }
+        }
+
+        // Mostrar los jugadores sin equipo
+        System.out.println("\nJugadores sin equipo:");
+        for (Jugador jugador : jugadores) {
+            if (jugador != null && (jugador.getEquipo() == null || jugador.getEquipo().isEmpty())) {
+                System.out.println("ID: " + jugador.getId() + ", Nombre: " + jugador.getNombre() + ", Posición: " + jugador.getPosicion());
+            }
+        }
+
 
 
         valorbotones = JOptionPane.showOptionDialog(
@@ -60,11 +76,11 @@ public class Proyectofutbol {
                                 //Se agregan los botones para seleccionar la Posicion
                                 Posicion posicion = Botones_Jugadores.seleccioneLaPosicion();
 
-                                Estado estado = Botones_Jugadores.seleccioneElEstado();
 
+                                Jugador jugador_modelo = new Jugador(nombre, equi, 0, 0, posicion);
 
-                                Jugador jugador_modelo = new Jugador(nombre, equi, 0, 0, posicion, estado);
                                 managePlayers.agregar_jugadores(jugador_modelo, jugadores);
+                                managePlayers.agregar_jugador_a_equipos_disponibles(jugador_modelo, equipos);
 
                                 menujugadores = 5;
                                 break;
@@ -113,13 +129,14 @@ public class Proyectofutbol {
                         //Casos 
                         switch (valorEquipos) {
                             case 0: //Metodo de mostrar
-
+                                manageTeams.mostrar_equipos(equipos);
+                                valorEquipos = 5;
                                 break;
                             case 1: //Metodo de agregar
                                 manageTeams.agregarEquipo(equipos, jugadores);
                                 valorEquipos = 5;
                                 break;
-                            case 2:
+                            case 2: //Metodo de agregar un jugador a un equipo
                                 JOptionPane.showMessageDialog(null, "Agregar Jugador a un Equipo");
                                 break;
                             case 3:
@@ -166,5 +183,6 @@ public class Proyectofutbol {
         }
         
     }
+
 
 }

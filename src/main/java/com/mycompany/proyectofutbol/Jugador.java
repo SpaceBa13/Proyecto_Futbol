@@ -15,14 +15,13 @@ public class Jugador {
     private static int idCounter = 10; // ID inicial que se incrementará automáticamente
     //Contructores
 
-    public Jugador(String nombre, String equipo, int golesAnotados, int acciones, Posicion posicion, Estado estado) {
+    public Jugador(String nombre, String equipo, int golesAnotados, int acciones, Posicion posicion) {
         this.id = idCounter++; // Asigna el ID único y lo incrementa
         this.nombre = nombre;
         this.equipo = equipo;
         this.golesAnotados = golesAnotados;
         this.acciones = acciones;
         this.posicion = posicion;
-        this.estado = estado;
     }
 
     public Jugador(){

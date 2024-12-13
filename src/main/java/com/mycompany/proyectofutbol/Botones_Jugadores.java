@@ -22,13 +22,13 @@ public class Botones_Jugadores {
 
         switch (valorBoton) {
             case 0:
-                return Posicion.portero;
+                return Posicion.PORTERO;
             case 1:
-                return Posicion.defensa;
+                return Posicion.DEFENSA;
             case 2: 
-                return Posicion.mediocampista;
+                return Posicion.MEDIOCAMPISTA;
             default: 
-                return Posicion.delantero;
+                return Posicion.DELANTERO;
         }
     }
         

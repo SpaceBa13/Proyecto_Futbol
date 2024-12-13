@@ -10,6 +10,34 @@ public class Equipo {
     private int contadorJugadores; // Lleva el control de cuántos jugadores hay en el equipo
     private static int idCounter = 100; // ID inicial auto-incrementable para equipos
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombreEquipo() {
+        return nombreEquipo;
+    }
+
+    public void setNombreEquipo(String nombreEquipo) {
+        this.nombreEquipo = nombreEquipo;
+    }
+
+    public Jugador[] getJugadores() {
+        return jugadores;
+    }
+
+    public void setJugadores(Jugador[] jugadores) {
+        this.jugadores = jugadores;
+    }
+
+    public void setContadorJugadores(int contadorJugadores) {
+        this.contadorJugadores = contadorJugadores;
+    }
+
     // Constructor
     public Equipo(String nombreEquipo) {
         this.id = idCounter++;
@@ -55,6 +83,7 @@ public class Equipo {
             }
         }
 
-        JOptionPane.showMessageDialog(null, info.toString());
+        // Imprimir la información en la consola
+        System.out.println(info.toString());
     }
 }
