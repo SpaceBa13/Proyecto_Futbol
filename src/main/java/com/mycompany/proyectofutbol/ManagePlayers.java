@@ -180,22 +180,47 @@ public class ManagePlayers {
             return;
         }
 
-        // Solicitar la edición del nombre
-        String nombre_edit = JOptionPane.showInputDialog("Ingrese el nuevo nombre del jugador:");
-        if (nombre_edit != null && !nombre_edit.trim().isEmpty()) {
-            jugadorSeleccionado.setNombre(nombre_edit);
-        } else {
-            JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío.");
-            return;  // Si el nombre es inválido, no se hace nada y se sale del método
+        // Presentar opciones para editar el jugador
+        String[] opciones = {"Editar Nombre", "Editar Posición"};
+        int opcionSeleccionada = JOptionPane.showOptionDialog(
+                null,
+                "Seleccione qué desea editar:",
+                "Editar Jugador",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
+        );
+
+        if (opcionSeleccionada == -1) {
+            return; // Si el usuario cancela la selección, salir
         }
 
-        // Solicitar la edición de la posición
-        Posicion posicion_edit = Botones_Jugadores.seleccioneLaPosicion();
-        if (posicion_edit != null) {
-            jugadorSeleccionado.setPosicion(posicion_edit);
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una posición válida.");
-            return;  // Si no se selecciona una posición, no se hace nada y se sale del método
+        // Editar Nombre
+        if (opcionSeleccionada == 0) {
+            String nombre_edit = JOptionPane.showInputDialog("Ingrese el nuevo nombre del jugador:");
+            if (nombre_edit != null && !nombre_edit.trim().isEmpty()) {
+                jugadorSeleccionado.setNombre(nombre_edit);
+                JOptionPane.showMessageDialog(null, "Nombre actualizado a: " + jugadorSeleccionado.getNombre());
+            } else {
+                JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío.");
+                return;  // Si el nombre es inválido, no se hace nada y se sale del método
+            }
+        }
+
+        // Editar Posición
+        else if (opcionSeleccionada == 1) {
+            // Usamos el método Botones_Jugadores.seleccioneLaPosicion para seleccionar la posición
+            Posicion posicion_edit = Botones_Jugadores.seleccioneLaPosicion();
+
+            if (posicion_edit != null) {
+                jugadorSeleccionado.setPosicion(posicion_edit);
+                JOptionPane.showMessageDialog(null, "Posición actualizada a: " + jugadorSeleccionado.getPosicion());
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una posición válida.");
+                return;  // Si no se selecciona una posición, no se hace nada y se sale del método
+            }
         }
 
         // Mostrar mensaje de confirmación de la edición
