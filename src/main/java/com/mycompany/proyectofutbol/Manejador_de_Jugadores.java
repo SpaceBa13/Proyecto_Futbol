@@ -1,12 +1,10 @@
 package com.mycompany.proyectofutbol;
 
-import javax.swing.*;
-
 import javax.swing.JOptionPane;
 
-public class ManagePlayers {
+public class Manejador_de_Jugadores {
 
-    public ManagePlayers() {}
+    public Manejador_de_Jugadores() {}
 
     // ----- Funciones de Impresión -----
 

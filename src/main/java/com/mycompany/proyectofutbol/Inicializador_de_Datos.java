@@ -3,7 +3,7 @@ package com.mycompany.proyectofutbol;
 import java.util.Random;
 
 
-public class DataInitializer {
+public class Inicializador_de_Datos {
     public static void inicializarDatos(Equipo[] equipos, Jugador[] jugadores) {
         // Generar nombres de equipos únicos
         String[] nombresEquipos = {"Los Dragones", "Los Lobos", "Los Halcones"};

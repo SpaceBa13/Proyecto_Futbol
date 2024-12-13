@@ -4,15 +4,15 @@ import javax.swing.JOptionPane;
 
 public class Proyectofutbol {
     public static void main(String[] args) {
-        ManagePlayers managePlayers = new ManagePlayers();
-        ManageTeams manageTeams = new ManageTeams();
+        Manejador_de_Jugadores manejadordeJugadores = new Manejador_de_Jugadores();
+        Manejador_de_Equipos manejadordeEquipos = new Manejador_de_Equipos();
         String[] botones = {" Gestión de Jugadores", " Gestión de Equipos", " Simulación de Partidos", " Reportes", " Salir del Sistema"};
         int valorbotones;
         Jugador jugadores[] = new Jugador[70];
         Equipo equipos[] = new Equipo[20];
 
         // Llamar a la clase de inicialización para generar los datos
-        DataInitializer.inicializarDatos(equipos, jugadores);
+        Inicializador_de_Datos.inicializarDatos(equipos, jugadores);
         // Mostrar los equipos generados con sus jugadores
         for (Equipo equipo : equipos) {
             if (equipo != null) {
@@ -79,23 +79,23 @@ public class Proyectofutbol {
 
                                 Jugador jugador_modelo = new Jugador(nombre, equi, posicion);
 
-                                managePlayers.agregar_jugadores(jugador_modelo, jugadores);
-                                managePlayers.agregar_jugador_a_equipos_disponibles(jugador_modelo, equipos);
+                                manejadordeJugadores.agregar_jugadores(jugador_modelo, jugadores);
+                                manejadordeJugadores.agregar_jugador_a_equipos_disponibles(jugador_modelo, equipos);
 
                                 menujugadores = 5;
                                 break;
                             case 1://Edicion de jugadores
                                 int id_jugador_edit = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del jugador que desea eliminar"));
-                                managePlayers.editar_jugador(jugadores,id_jugador_edit);
+                                manejadordeJugadores.editar_jugador(jugadores,id_jugador_edit);
                                 menujugadores = 5;
                                 break;
                             case 2://Eliminacion de jugadores
                                 int id_jugador = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del jugador que desea eliminar"));
-                                managePlayers.eliminar_jugador(jugadores, id_jugador);
+                                manejadordeJugadores.eliminar_jugador(jugadores, id_jugador);
                                 menujugadores = 5;
                                 break;
                             case 3://Mostrar Jugadores
-                                managePlayers.imprimir_jugadores(jugadores);
+                                manejadordeJugadores.imprimir_jugadores(jugadores);
                                 menujugadores = 5;
                                 break;
                             case 4:
@@ -128,23 +128,23 @@ public class Proyectofutbol {
                         //Casos 
                         switch (valorEquipos) {
                             case 0: //Metodo de mostrar
-                                manageTeams.mostrar_equipos(equipos);
+                                manejadordeEquipos.mostrar_equipos(equipos);
                                 valorEquipos = 5;
                                 break;
                             case 1: //Metodo de agregar
-                                manageTeams.agregar_equipo(equipos, jugadores);
+                                manejadordeEquipos.agregar_equipo(equipos, jugadores);
                                 valorEquipos = 5;
                                 break;
                             case 2: //Metodo de agregar un jugador a un equipo
                                 JOptionPane.showMessageDialog(null, "Agregar Jugador a un Equipo");
                                 int id_equipo_agregar = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del equipo al que desea agregar un jugador"));
-                                manageTeams.agregar_jugador_a_equipo_por_id(jugadores, equipos, id_equipo_agregar);
+                                manejadordeEquipos.agregar_jugador_a_equipo_por_id(jugadores, equipos, id_equipo_agregar);
                                 valorEquipos = 5;
                                 break;
                             case 3://Metodo de eliminar un jugador a un equipo
                                 JOptionPane.showMessageDialog(null, "Eliminar Jugador a un Equipo");
                                 int id_equipo_eliminar = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID del equipo al que desea eliminar un jugador"));
-                                manageTeams.eliminar_jugador_a_equipo_por_id(jugadores, equipos, id_equipo_eliminar);
+                                manejadordeEquipos.eliminar_jugador_a_equipo_por_id(jugadores, equipos, id_equipo_eliminar);
                                 valorEquipos = 5;
                                 break;
                             default:

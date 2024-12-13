@@ -1,12 +1,10 @@
 package com.mycompany.proyectofutbol;
 
-import javax.swing.*;
-
 import javax.swing.JOptionPane;
 
-public class ManageTeams {
+public class Manejador_de_Equipos {
 
-    public ManageTeams() {}
+    public Manejador_de_Equipos() {}
 
     // ----- Funciones de Agregar Jugadores y Equipos -----
 
@@ -154,32 +152,55 @@ public class ManageTeams {
     }
 
     // Función general para seleccionar un jugador
-    private String seleccionar_jugador_general(Jugador[] jugadores, boolean desdeEquipo) {
+    private String seleccionar_jugador_general(Jugador[] jugadores, boolean tiene_equipo) {
         String[] opcionesJugadores = new String[jugadores.length + 1];
         int jugadorDisponible = 0;
 
         for (int i = 0; i < jugadores.length; i++) {
-            if (jugadores[i] != null && (desdeEquipo || jugadores[i].get_equipo().isEmpty())) {
+            if (jugadores[i] != null && (tiene_equipo || jugadores[i].get_equipo().isEmpty())) {
                 opcionesJugadores[jugadorDisponible++] = jugadores[i].get_nombre() + " (ID: " + jugadores[i].get_id() + ", Posición: " + jugadores[i].get_posicion() + ")";
             }
         }
 
         if (jugadorDisponible == 0) {
-            JOptionPane.showMessageDialog(null, desdeEquipo ? "No hay jugadores disponibles para eliminar." : "No hay jugadores disponibles para agregar.");
+            // Si no hay jugadores disponibles para agregar o eliminar, mostrar un mensaje
+            if (tiene_equipo) {
+                JOptionPane.showMessageDialog(null, "No hay jugadores disponibles para eliminar.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay jugadores disponibles para agregar.");
+            }
             return null;
         }
 
-        String seleccion = (String) JOptionPane.showInputDialog(
-                null,
-                "Seleccione un jugador:",
-                desdeEquipo ? "Eliminar Jugador" : "Agregar Jugador",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                opcionesJugadores,
-                opcionesJugadores[0]
-        );
+        // Mostrar el menú de selección de jugadores
+        String seleccion;
+        if (tiene_equipo) {
+            seleccion = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Seleccione un jugador para eliminar:",
+                    "Eliminar Jugador",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    opcionesJugadores,
+                    opcionesJugadores[0]
+            );
+        } else {
+            seleccion = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Seleccione un jugador para agregar:",
+                    "Agregar Jugador",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    opcionesJugadores,
+                    opcionesJugadores[0]
+            );
+        }
 
-        return seleccion != null && !seleccion.equals("") ? seleccion : null;
+        if (seleccion != null && !seleccion.equals("")) {
+            return seleccion;
+        } else {
+            return null;
+        }
     }
 
     // ----- Funciones de Agregar Jugador a un Equipo -----
